@@ -13,7 +13,7 @@ object EntryPoint extends js.JSApp {
     AppStyles.addToDocument()
     val HelloMessage = ReactComponentB[Unit]("")
       .render(_ => <.div(AppStyles.title, "Hello world"))
-      .build
-    ReactDOM.render(HelloMessage(""), document.getElementById("demo"))
+      .buildU
+    ReactDOM.render(HelloMessage(), document.getElementById("demo"))
   }
 }
