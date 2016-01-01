@@ -8,6 +8,8 @@ scalaJSStage in Global := FastOptStage
 
 skip in packageJSDependencies := false
 
+ideaExcludeFolders ++= Seq("node_modules", "js")
+
 libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "0.10.3"
 libraryDependencies += "com.github.japgolly.scalacss" %%% "core" % "0.3.1"
 libraryDependencies += "com.github.japgolly.scalacss" %%% "ext-react" % "0.3.1"
