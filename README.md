@@ -10,6 +10,12 @@ ER model editor/viewer.
     * Easy to integrate to command line operations.
 * For me, learning Scala language.
 
+## Prerequisites
+
+* JDK: 1.8
+* sbt: 0.13.6
+* npm: 3.3.12
+
 ## Build
 
 ```console
@@ -17,7 +23,7 @@ $ git clone https://github.com/ksoichiro/er.git
 $ cd er/
 $ npm install
 $ sbt clean compile fastOptJS
-$ electron .
+$ npm start
 ```
 
 ## Roadmap

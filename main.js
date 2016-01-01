@@ -4,8 +4,6 @@ var app = require('app');
 var BrowserWindow = require('browser-window');
 var Menu = require('menu');
 
-require('crash-reporter').start();
-
 var mainWindow = null;
 
 var menu = Menu.buildFromTemplate([
@@ -37,7 +35,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600, center: true});
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
