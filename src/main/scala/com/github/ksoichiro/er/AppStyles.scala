@@ -7,7 +7,7 @@ object AppStyles extends StyleSheet.Inline {
 
   import dsl._
 
-  val title = style(
-    border(1.px, solid, black)
+  val button = style(
+    addClassNames("pure-button", "pure-button-primary")
   )
 }
