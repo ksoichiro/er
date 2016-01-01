@@ -8,6 +8,6 @@ object AppStyles extends StyleSheet.Inline {
   import dsl._
 
   val title = style(
-    border(1 px, solid, black)
+    border(1.px, solid, black)
   )
 }
