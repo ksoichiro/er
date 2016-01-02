@@ -4,7 +4,7 @@
   "description": "ER model editor/viewer powered by Electron.",
   "main": "main.js",
   "dependencies": {
-    "purecss": "0.6.0"
+    "semantic-ui-css": "^2.1.7"
   },
   "scripts": {
     "start": "electron .",
