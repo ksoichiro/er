@@ -1,5 +1,7 @@
 # [WIP] er
 
+[![Build Status](https://travis-ci.org/ksoichiro/er.svg?branch=master)](https://travis-ci.org/ksoichiro/er)
+
 ER model editor/viewer.
 
 ## Purpose
@@ -9,17 +11,12 @@ ER model editor/viewer.
     * Open and readable data format.
     * Easy to integrate to command line operations.
 
-## Prerequisites
-
-* npm: 3.3.12
-
 ## Build
 
 ```console
 $ git clone https://github.com/ksoichiro/er.git
 $ cd er/
 $ npm install
-$ npm run build
 $ npm start
 ```
 
