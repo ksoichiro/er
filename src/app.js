@@ -1,5 +1,5 @@
 'use strict';
-import polyfill from 'babel-polyfill';
+
 import app from 'app';
 import BrowserWindow from 'browser-window';
 import crashReporter from 'crash-reporter';
@@ -51,7 +51,7 @@ let menu = Menu.buildFromTemplate([
 
 app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
-    quit();
+    app.quit();
   }
 });
 

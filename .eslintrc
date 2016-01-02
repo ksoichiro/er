@@ -1,0 +1,12 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": [
+    "babel",
+    "react"
+  ],
+  "extends": "eslint:recommended"
+}

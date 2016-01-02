@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var electronServer = require('electron-connect').server;
 var $ = require('gulp-load-plugins')();
+var del = require('del');
 
 var srcDir = 'src';
 var serveDir = '.serve';
@@ -58,16 +59,15 @@ gulp.task('compile:html:watch', ['compile:styles'], function(done) {
       ignorePath: ['../../' + serveDir, '..'],
       addPrefix: '..'
     }))
-    .pipe(gulp.dest(serveDir))
+    .pipe(gulp.dest(serveDir + '/renderer'))
   ;
   done();
 });
 
 gulp.task('dist:html', ['compile:html'], function () {
-  var assets = $.useref({searchPath: [serveDir + '/styles']});
   return gulp.src(serveDir + '/renderer/**/*.html')
     .pipe($.if('*.css', $.minifyCss()))
-    .pipe($.useref())
+    .pipe($.useref({searchPath: [serveDir + '/styles']}))
     .pipe(gulp.dest(distDir + '/renderer'))
   ;
 });
@@ -94,7 +94,7 @@ gulp.task('compile:scripts:watch', function (done) {
 });
 
 gulp.task('clean', function (done) {
-  del([serveDir], function () {
+  del([serveDir, distDir], function () {
     done();
   });
 });
