@@ -23,6 +23,25 @@ var menu = Menu.buildFromTemplate([
         click: function() { app.quit(); }
       }
     ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {
+        label: 'Reload',
+        accelerator: 'Command+R',
+        click: function() {
+          BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
+        }
+      },
+      {
+        label: 'Toggle DevTools',
+        accelerator: 'Alt+Command+I',
+        click: function() {
+          BrowserWindow.getFocusedWindow().toggleDevTools();
+        }
+      }
+    ]
   }
 ]);
 
