@@ -15,7 +15,8 @@
     "start": "gulp serve",
     "build": "gulp build",
     "clean": "gulp clean",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "gulp clean && gulp build && eslint ."
   },
   "keywords": [],
   "author": "Soichiro Kashima",

@@ -106,4 +106,4 @@ gulp.task('serve', ['compile:styles:watch', 'compile:html:watch', 'compile:scrip
   gulp.watch([serveDir + '/styles/**/*.css', serveDir + '/renderer/**/*.{html,js}'], electron.reload);
 });
 
-gulp.task('build', ['dist:html', 'compile:scripts']);
+gulp.task('build', ['compile:html', 'compile:scripts']);
