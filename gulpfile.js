@@ -15,9 +15,14 @@ gulp.task('compile:styles', function () {
     ;
 });
 
-gulp.task('inject:css', ['compile:styles'], function() {
+gulp.task('inject', ['compile:styles'], function() {
   return gulp.src(srcDir + '/**/*.html')
-    .pipe($.inject(gulp.src(['./node_modules/semantic-ui-css/**/*.{js,css}', serveDir + '/styles/**/*.css']), {
+    .pipe($.inject(
+      gulp.src([
+        './node_modules/semantic-ui-css/semantic.min.css',
+        './node_modules/semantic-ui-css/semantic.min.js',
+        serveDir + '/styles/**/*.css'
+      ]), {
       relative: true,
       ignorePath: ['../../.serve', '..'],
       addPrefix: '..'
@@ -26,7 +31,7 @@ gulp.task('inject:css', ['compile:styles'], function() {
   ;
 });
 
-gulp.task('html', ['inject:css'], function () {
+gulp.task('html', ['inject'], function () {
   var assets = $.useref({searchPath: [serveDir + '/styles']});
   return gulp.src(serveDir + '/renderer/**/*.html')
     .pipe($.if('*.css', $.minifyCss()))
