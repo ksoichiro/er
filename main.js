@@ -25,7 +25,6 @@ var menu = Menu.buildFromTemplate([
     ]
   }
 ]);
-Menu.setApplicationMenu(menu);
 
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
@@ -34,6 +33,7 @@ app.on('window-all-closed', function() {
 });
 
 app.on('ready', function() {
+  Menu.setApplicationMenu(menu);
   mainWindow = new BrowserWindow({width: 800, height: 600, center: true});
   mainWindow.loadURL('file://' + __dirname + '/index.html');
   mainWindow.on('closed', function() {
