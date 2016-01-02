@@ -1,13 +1,14 @@
 var gulp = require('gulp');
-var electron = require('electron-connect').server.create();
+var electronServer = require('electron-connect').server;
 var $ = require('gulp-load-plugins')();
 
 var srcDir = 'src';
 var serveDir = '.serve';
 var distDir = 'dist';
+var babelOptions = {presets: ["react", "es2015", "stage-0"]};
 
 gulp.task('compile:styles', function () {
-  return gulp.src([srcDir + '/styles/**/*.less'])
+  return gulp.src(srcDir + '/styles/**/*.less')
     .pipe($.sourcemaps.init())
     .pipe($.less())
     .pipe($.sourcemaps.write('.'))
@@ -15,8 +16,20 @@ gulp.task('compile:styles', function () {
     ;
 });
 
-gulp.task('inject', ['compile:styles'], function() {
-  return gulp.src(srcDir + '/**/*.html')
+gulp.task('compile:styles:watch', function (done) {
+  gulp.src(srcDir + '/styles/**/*.less')
+    .pipe($.watch(srcDir + '/styles/**/*.less', {verbose: true}))
+    .pipe($.plumber())
+    .pipe($.sourcemaps.init())
+    .pipe($.less())
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest(serveDir))
+  ;
+  done();
+});
+
+gulp.task('compile:html', ['compile:styles'], function() {
+  return gulp.src(srcDir + '/renderer/**/*.html')
     .pipe($.inject(
       gulp.src([
         './node_modules/semantic-ui-css/semantic.min.css',
@@ -24,14 +37,33 @@ gulp.task('inject', ['compile:styles'], function() {
         serveDir + '/styles/**/*.css'
       ]), {
       relative: true,
-      ignorePath: ['../../.serve', '..'],
+      ignorePath: ['../../' + serveDir, '..'],
       addPrefix: '..'
     }))
     .pipe(gulp.dest(serveDir))
   ;
 });
 
-gulp.task('html', ['inject'], function () {
+gulp.task('compile:html:watch', ['compile:styles'], function(done) {
+  gulp.src(srcDir + '/renderer/**/*.html')
+    .pipe($.watch(srcDir + '/renderer/**/*.html', {verbose: true}))
+    .pipe($.plumber())
+    .pipe($.inject(
+      gulp.src([
+        './node_modules/semantic-ui-css/semantic.min.css',
+        './node_modules/semantic-ui-css/semantic.min.js',
+        serveDir + '/styles/**/*.css'
+      ]), {
+      relative: true,
+      ignorePath: ['../../' + serveDir, '..'],
+      addPrefix: '..'
+    }))
+    .pipe(gulp.dest(serveDir))
+  ;
+  done();
+});
+
+gulp.task('dist:html', ['compile:html'], function () {
   var assets = $.useref({searchPath: [serveDir + '/styles']});
   return gulp.src(serveDir + '/renderer/**/*.html')
     .pipe($.if('*.css', $.minifyCss()))
@@ -41,14 +73,24 @@ gulp.task('html', ['inject'], function () {
 });
 
 gulp.task('compile:scripts', function () {
-  return gulp.src('src/**/*.{js,jsx}')
+  return gulp.src(srcDir + '/**/*.{js,jsx}')
     .pipe($.sourcemaps.init())
-    .pipe($.babel({
-      presets: ["react", "es2015", "stage-0"]
-    }))
+    .pipe($.babel(babelOptions))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('.serve'))
+    .pipe(gulp.dest(serveDir))
   ;
+});
+
+gulp.task('compile:scripts:watch', function (done) {
+  gulp.src(srcDir + '/**/*.{js,jsx}')
+    .pipe($.watch(srcDir + '/**/*.{js,jsx}', {verbose: true}))
+    .pipe($.plumber())
+    .pipe($.sourcemaps.init())
+    .pipe($.babel(babelOptions))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest(serveDir))
+  ;
+  done();
 });
 
 gulp.task('clean', function (done) {
@@ -57,10 +99,11 @@ gulp.task('clean', function (done) {
   });
 });
 
-gulp.task('serve', function () {
+gulp.task('serve', ['compile:styles:watch', 'compile:html:watch', 'compile:scripts:watch'], function () {
+  var electron = electronServer.create();
   electron.start();
-  gulp.watch(['.serve/app.js', '.serve/browser/**/*.js'], electron.restart);
-  gulp.watch(['.serve/styles/**/*.css', '.serve/renderer/**/*.{html,js}'], electron.reload);
+  gulp.watch([serveDir + '/app.js', serveDir + '/browser/**/*.js'], electron.restart);
+  gulp.watch([serveDir + '/styles/**/*.css', serveDir + '/renderer/**/*.{html,js}'], electron.reload);
 });
 
-gulp.task('build', ['html', 'compile:scripts']);
+gulp.task('build', ['dist:html', 'compile:scripts']);
