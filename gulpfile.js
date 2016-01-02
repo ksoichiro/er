@@ -65,8 +65,8 @@ gulp.task('compile:html:watch', ['compile:styles'], function(done) {
 });
 
 gulp.task('dist:html', ['compile:html'], function () {
-  return gulp.src(serveDir + '/renderer/**/*.html')
-    .pipe($.if('*.css', $.minifyCss()))
+  return gulp.src([serveDir + '/renderer/**/*.html', serveDir + '/styles/**/*.css'])
+    .pipe($.if('*.css', $.cssnano()))
     .pipe($.useref({searchPath: [serveDir + '/styles']}))
     .pipe(gulp.dest(distDir + '/renderer'))
   ;
@@ -107,3 +107,4 @@ gulp.task('serve', ['compile:styles:watch', 'compile:html:watch', 'compile:scrip
 });
 
 gulp.task('build', ['compile:html', 'compile:scripts']);
+gulp.task('dist', ['dist:html']);

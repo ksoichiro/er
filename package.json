@@ -16,7 +16,7 @@
     "build": "gulp build",
     "clean": "gulp clean",
     "lint": "eslint .",
-    "test": "gulp clean && gulp build && eslint ."
+    "test": "gulp clean && gulp build && gulp dist && eslint ."
   },
   "keywords": [],
   "author": "Soichiro Kashima",
@@ -38,11 +38,11 @@
     "eslint-plugin-react": "^3.13.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
+    "gulp-cssnano": "^2.0.0",
     "gulp-if": "^2.0.0",
     "gulp-inject": "^3.0.0",
     "gulp-less": "^3.0.5",
     "gulp-load-plugins": "^1.1.0",
-    "gulp-minify-css": "^1.2.3",
     "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-useref": "^3.0.4",
