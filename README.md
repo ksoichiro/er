@@ -8,12 +8,9 @@ ER model editor/viewer.
     * Cross platform.
     * Open and readable data format.
     * Easy to integrate to command line operations.
-* For me, learning Scala language.
 
 ## Prerequisites
 
-* JDK: 1.8
-* sbt: 0.13.6
 * npm: 3.3.12
 
 ## Build
@@ -22,7 +19,7 @@ ER model editor/viewer.
 $ git clone https://github.com/ksoichiro/er.git
 $ cd er/
 $ npm install
-$ sbt clean compile fastOptJS
+$ npm run build
 $ npm start
 ```
 

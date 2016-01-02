@@ -1,12 +1,16 @@
 'use strict';
+import polyfill from 'babel-polyfill';
+import app from 'app';
+import BrowserWindow from 'browser-window';
+import crashReporter from 'crash-reporter';
+import Menu from 'menu';
 
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var Menu = require('menu');
+let mainWindow = null;
+if (process.env.NODE_ENV === 'develop') {
+  crashReporter.start();
+}
 
-var mainWindow = null;
-
-var menu = Menu.buildFromTemplate([
+let menu = Menu.buildFromTemplate([
   {
     label: 'er',
     submenu: [
@@ -30,14 +34,14 @@ var menu = Menu.buildFromTemplate([
       {
         label: 'Reload',
         accelerator: 'Command+R',
-        click: function() {
+        click: () => {
           BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
         }
       },
       {
         label: 'Toggle DevTools',
         accelerator: 'Alt+Command+I',
-        click: function() {
+        click: () => {
           BrowserWindow.getFocusedWindow().toggleDevTools();
         }
       }
@@ -45,16 +49,16 @@ var menu = Menu.buildFromTemplate([
   }
 ]);
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
     quit();
   }
 });
 
-app.on('ready', function() {
+app.on('ready', () => {
   Menu.setApplicationMenu(menu);
   mainWindow = new BrowserWindow({width: 800, height: 600, center: true});
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/renderer/index.html');
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
