@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-export class Menu extends React.Component {
+export default class Menu extends React.Component {
   constructor () {
     super();
   }

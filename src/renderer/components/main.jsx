@@ -1,10 +1,10 @@
 'use strict';
 
 import React from 'react';
-import {Header} from './header';
-import {Menu} from './menu';
+import Header from './header';
+import Menu from './menu';
 
-export class Main extends React.Component {
+export default class Main extends React.Component {
   constructor () {
     super();
   }
