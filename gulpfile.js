@@ -6,7 +6,6 @@ var del = require('del');
 var srcDir = 'src';
 var serveDir = '.serve';
 var distDir = 'dist';
-var babelOptions = {presets: ["react", "es2015", "stage-0"]};
 
 gulp.task('compile:styles', function () {
   return gulp.src(srcDir + '/styles/**/*.less')
@@ -75,7 +74,7 @@ gulp.task('dist:html', ['compile:html'], function () {
 gulp.task('compile:scripts', function () {
   return gulp.src(srcDir + '/**/*.{js,jsx}')
     .pipe($.sourcemaps.init())
-    .pipe($.babel(babelOptions))
+    .pipe($.babel())
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(serveDir))
   ;
@@ -86,7 +85,7 @@ gulp.task('compile:scripts:watch', function (done) {
     .pipe($.watch(srcDir + '/**/*.{js,jsx}', {verbose: true}))
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe($.babel(babelOptions))
+    .pipe($.babel())
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(serveDir))
   ;
