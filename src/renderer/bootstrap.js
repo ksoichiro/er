@@ -1,7 +1,16 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Main from './components/Main';
+React;
+import { render } from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import App from './containers/App';
+import erApp from './reducers';
 
-ReactDOM.render(React.createElement(Main), document.getElementById('app'));
+let store = createStore(erApp);
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById('app'));

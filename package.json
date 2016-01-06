@@ -9,6 +9,8 @@
   "main": ".serve/app.js",
   "dependencies": {
     "react": "^0.14.5",
+    "react-redux": "^4.0.6",
+    "redux": "^3.0.5",
     "semantic-ui-css": "^2.1.7"
   },
   "scripts": {
