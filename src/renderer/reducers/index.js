@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_MODEL, ADD_INDEX } from '../actions'
+import { ADD_MODEL, ADD_INDEX, SAVE_FILE } from '../actions'
 
 function models(state = [], action) {
   switch (action.type) {
@@ -16,6 +16,10 @@ function models(state = [], action) {
         {
           name: action.name
         }
+      ];
+    case SAVE_FILE:
+      return [
+        ...state
       ];
     default:
       return state;
